@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Kill
   - Car
+  - Kill2
   layers:
   - Default
   - TransparentFX

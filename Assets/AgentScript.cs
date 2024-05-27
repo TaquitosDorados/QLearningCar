@@ -29,6 +29,7 @@ public class AgentScript : Agent
         // Add car's velocity and direction to observations
         sensor.AddObservation(car.rb.velocity.magnitude);
         sensor.AddObservation(transform.right);
+        sensor.AddObservation(transform.position);
 
         // Add the direction to the next checkpoint
         Vector3 directionToCheckpoint = (checkpoints[nextCheckpointIndex].position - transform.position).normalized;
@@ -38,7 +39,7 @@ public class AgentScript : Agent
     {
         if (actions.DiscreteActions[0] == 0)
         {
-            car.Backward();
+            //car.Backward();
         }
         else if (actions.DiscreteActions[0] == 1)
         {
@@ -47,11 +48,14 @@ public class AgentScript : Agent
 
         if (actions.DiscreteActions[1] == 0)
         {
-            car.Steer(1);
+            
         }
         else if (actions.DiscreteActions[1] == 1)
         {
             car.Steer(-1);
+        } else
+        {
+            car.Steer(1);
         }
     }
 
@@ -67,6 +71,11 @@ public class AgentScript : Agent
             AddReward(1f);
             Debug.Log("si");
             nextCheckpointIndex = (nextCheckpointIndex + 1) % checkpoints.Length;
+        } else if (collision.CompareTag("Kill2"))
+        {
+            AddReward(-5f);
+            Debug.Log("kill");
+            EndEpisode();
         }
     }
 
@@ -82,6 +91,6 @@ public class AgentScript : Agent
         {
             discreteActions[0] = 0;
         }
-        //discreteActions[1] = (int)Input.GetAxis("Horizontal");
+        discreteActions[1] = (int)Input.GetAxis("Horizontal");
     }
 }

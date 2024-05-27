@@ -55,6 +55,11 @@ public class CarScript : MonoBehaviour
 
     public void Backward()
     {
+        if(rb.velocity.magnitude < 0.5f)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
         rb.AddForce(transform.right*-1 * accel * 1.3f);
     }
 
